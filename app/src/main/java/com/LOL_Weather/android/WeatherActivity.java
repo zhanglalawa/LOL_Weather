@@ -1,5 +1,6 @@
 package com.LOL_Weather.android;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.LOL_Weather.android.gson.Forecast;
 import com.LOL_Weather.android.gson.Weather;
+import com.LOL_Weather.android.service.AutoUpdateService;
 import com.LOL_Weather.android.util.HttpUtil;
 import com.LOL_Weather.android.util.Utility;
 import com.bumptech.glide.Glide;
@@ -203,7 +205,7 @@ public class WeatherActivity extends AppCompatActivity {
         String degree = weather.now.temperature + "℃";
         String weatherInfo = weather.now.more.info;
         titleCity.setText(cityName);
-        titleUpdateTime.setText(updateTime);
+        titleUpdateTime.setText("更新时间:" + updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
         forecastLayout.removeAllViews();
@@ -230,6 +232,8 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
 
